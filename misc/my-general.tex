@@ -1,0 +1,27 @@
+% General-purpose definitions and inclusions
+% you are using in any document 
+% (regardless of its class and style files used),
+% e.g. package uses:
+
+%\usepackage{xspace}
+
+% and macros/command defintions:
+
+%\newcommand{\complexityclass}[1]{{\bf #1}\xspace}
+%\newcommand{\NPTIME}{\complexityclass{NP}}
+
+% For this template, we'll only have one single command,
+% necessary for including graphics...
+\usepackage{graphicx}% http://ctan.org/pkg/graphicx
+\usepackage{color}
+\newcommand{\speedup}[1]{#1$\times$}
+\usepackage[caption=false]{subfig}
+\captionsetup[subfloat]{margin=3pt}
+\newcommand{\hide}[1]{}
+\renewcommand{\tilde}[0]{$\sim$}
+\newcommand{\percent}[1]{#1\% }
+\newcommand{\us}[0]{$\mu s$}
+%\newcommand{\comment}[1]{}
+\newcommand{\comment}[1]{\textcolor{red}{[#1]}}
+
+

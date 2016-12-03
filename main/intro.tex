@@ -1,0 +1,48 @@
+\chapter{Introduction}
+\label{chap:intro}
+% do we need to add TOC lines?
+
+%\begin{figure}
+%  \centering
+%  \includegraphics[width=0.75\textwidth]{main/graphics/a_blowup.pdf}
+%  \caption{This is a caption}
+%\end{figure}
+
+
+The prevalence of machine consolidation through the use of virtual machines (VMs) necessitates improvements in VM performance. On the architecture side, major processor vendors have introduced virtualization extensions to their instruction set architectures~\cite{popek1974formal,intel,armv8}.
+The emergence of high-speed (10Gbe and faster) networking interfaces also requires that VMs be granted direct access to  physical devices, thereby eliminating the costly, software-based hypervisor device multiplexing.
+
+Enabling untrusted VMs to directly access physical devices, however, compromises system security.
+To overcome the fundamental security issue, the PCIe standard was extended to support self-virtualizing devices through the Single-Root I/O Virtualization (SR-IOV) interface~\cite{pcisigiov}).
+This method enables a physical device (\emph{physical function} in SR-IOV parlance) to dynamically create virtual instances (\emph{virtual functions}). Each virtual instance receives a separate address on the PCIe interconnect and can, therefore, be exclusively assigned to, and accessed by, a specific VM. This method thereby distinguishes between the physical device, managed by the hypervisor, and its virtual instances used by the VMs.
+%
+Importantly, it is up to the physical device to interleave and execute requests issued to the virtual devices.
+
+Self-virtualizing devices thus delegate the task of multiplexing VM requests from the software hypervisor to the device itself.
+The multiplexing policy, however, depends on the inherent semantics of the underlying device and must, naturally, isolate request streams sent by individual virtual devices (that represent client VMs).
+For some devices, such as networking interfaces, the physical device can simply interleave the packets sent by its virtual instances (while protecting the shared link state~\cite{smolyar15sriovsec}).
+%performance of direct assignment with flexibility of emulation
+%
+However, enforcing isolation is nontrivial when dealing with storage controllers/devices, which typically store a filesystem structure maintained by the hypervisor. The physical storage controller must therefore enforce the access permissions imposed by the filesystem it hosts.
+%
+%SHARON?
+The introduction of next-generation, commercial PCIe SSDs that deliver multi-GB/s bandwidth~\cite{intel-ssd,seagate16ssd}) emphasizes the need for self-virtualizing storage technology.
+
+In this paper we present NeSC, a self-virtualizing nested storage controller that enables hypervisors to expose files and persistent objects\footnotemark (or sets thereof) as virtual block devices that can be directly assigned to VMs. NeSC enforces the permissions set by the hypervisor and the hosted filesystem and prevents virtual devices (and VMs) from accessing stored data for which they have no access permissions.
+
+\footnotetext{We use the terms files and objects interchangeably in this paper.}
+
+NeSC enforces isolation by associating each virtual NeSC device with a table that maps offsets in the virtual device to blocks on the physical device. This process follows the way filesystems map file offsets to disk blocks.
+%
+VMs view virtual NeSC instances as regular PCIe storage controllers (block devices). Whenever the hypervisor wishes to grant a VM direct access to a file, it queries the filesystem for the file's logical-to-physical mapping and instantiates a virtual NeSC instance associated with the resulting mapping table.
+%
+Each access by a VM to its virtual NeSC instance is then transparently mapped by NeSC to a physical disk block using the mapping table associated with the virtual device (e.g., the first block on the virtual device maps to offset zero in the mapped file).
+
+We evaluate the performance benefits of NeSC using a real working prototype implemented on a Xilinx VC707 FPGA development board. Our evaluation shows that our NeSC prototype, which provides 800MB/s read bandwidth and almost 1GB/s write bandwidth, delivers \speedup{2.5} and \speedup{3} better read and write bandwidth, respectively, compared to a paravirtualized \emph{virtio}~\cite{russell2008virtio} storage controller (the de facto standard for virtualizing storage in Linux hypervisors), and \speedup{4} and \speedup{6} better read and write bandwidth, respectively, compared to an emulated storage controller.
+We further show that these performance benefits are limited only by the bandwidth provided by our academic protoype. We expect that NeSC will greatly benefit commercial PCIe SSDs capable of delivering multi-GB/s of bandwidth.
+
+
+
+
+
+

@@ -1,0 +1,53 @@
+\chapter{The IO Stack}
+\label{chap:iostack}
+
+\comment{Maby add a fugure with all the layers?}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Background}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The I/O stack is the set of abstractions an I/O request passes starting at an application issuing the read/write request, and ending at the data written/read to the physical storage device. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{I/O Stack Components}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Filesystem}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+A filesystem is the methods and data structures that an operating system uses to keep track of files on a disk or partition; that is, the way files are organized on the disk.
+Every filesystem implements a mapping mechanism in which file offsets are mapped to physical storage blocks.
+Traditionally, UNIX-derived filesystems used per-file direct and indirect  block mapping tables to map offsets in a file to their corresponding data block. But tracking individual blocks incurs large spatial and latency
+overheads when dealing with large files. Modern UNIX filesystems (e.g., ext4~\cite{mathur07ext4},
+btrfs~\cite{rodeh13btrfs}, xfs~\cite{sweeney96xfs}) therefore group contiguous physical blocks into
+\emph{extents} and construct extent trees, which consist of variants of B-trees~\cite{comer79btree}, to spatially
+map offsets in the device to extents.
+Each file is associated with an extent tree (pointed to by the file's \emph{inode}) that maps file offsets to
+physical blocks.
+\comment{Maybe elaborate on extents some more? moaybe a figure?}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Block Layer}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The block layer is a kernel component that handles the requests for all block devices in the system.
+A request can reach this layer either from the filesystem layer, or directly from an application reading/writing straight to the raw device.
+\comment{should i talk about aspects of the layer? scheduling...}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Device Driver}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The role of device drivers is to communicate with I/O devices attached to the system.
+Block device drivers' get block read/write requests from the block layer
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Block Device}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\comment{should i talk about new storage technologies and their performance}
+
+
+
+
+
