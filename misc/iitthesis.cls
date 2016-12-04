@@ -293,7 +293,7 @@
 \iitthesis@thesisdatafield{authorHebrew}{שם המחבר}
 \iitthesis@thesisdatafield{titleEnglish}{NeSC: A self-virtualizing, nested storage controller}
 \iitthesis@thesisdatafield{titleHebrew}{כותרת החיבור}
-\iitthesis@thesisdatafield{disciplineEnglish}{Discipline Name}
+\iitthesis@thesisdatafield{disciplineEnglish}{Electrical Engineering}
 \iitthesis@thesisdatafield{disciplineHebrew}{שם התחום המדעי}
 \iitthesis@thesisdatafield{supervisionEnglish}{Information regarding the supervision and supervisors}
 \iitthesis@thesisdatafield{supervisionHebrew}{מידע על המנחים וההנחיה}
@@ -429,7 +429,7 @@ notations listing here.} \iitthesis@thesisdatafield{thesisbibstyle}{alpha}
 
  \flipmargins
 
-\makecoverHebrew
+%%%%%% \makecoverHebrew
  % We're not clearing to a verso page, since we've flipped the margins;
  % this should generate 1 empty page between the cover page and the title page
  \cleardoublepage

@@ -23,7 +23,7 @@
 % This templated uses the iso-8859-8-i charset (i.e. single-byte logical 
 % Hebrew; it's about the same as the windows-1255 codepage, but not the
 % same as UTF-8) - and this works with MikTeX 2.9 and using pdfelatex.
-% With your TeX distribution you might need to create files in thenn
+% With your TeX distribution you might need to create files in the
 % UTF-8 charset.
 \include{misc/thesis-fields}
 
@@ -101,13 +101,11 @@
 % system setup, and/or a final chapter with summary, discussion and further
 % research direction or questions)
 
-\include{main/motivation}
-\include{main/intro}
 
-%background
-\include{main/virtualization}
-\include{main/iostack}
-\include{main/pciebus}
+\include{main/intro}
+\include{main/iovirt}
+\include{main/motivation}
+\include{main/related}
 %NeSC 
 \include{main/design}
 \include{main/architecture}
@@ -140,7 +138,7 @@
 % in the file will be the last page of the abstract, and the
 % Hebrew cover page will be the last page of the file.
 %
-%\makebackmatter
+\makebackmatter
 %\makebibliography
 
 % The resulting PDF can be printed and taken straight to binding,

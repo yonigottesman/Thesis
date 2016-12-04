@@ -17,6 +17,19 @@ Paul Barham, Boris Dragovic, Keir Fraser, Steven Hand, Tim Harris, Alex Ho,
 \newblock Xen and the art of virtualization.
 \newblock pages 164--177, 2003.
 
+\bibitem[CDC{\etalchar{+}}10]{caulfield10moneta}
+Adrian~M Caulfield, Arup De, Joel Coburn, Todor~I Mollow, Rajesh~K Gupta, and
+  Steven Swanson.
+\newblock Moneta: A high-performance storage array architecture for
+  next-generation, non-volatile memories.
+\newblock pages 385--395, 2010.
+
+\bibitem[CME{\etalchar{+}}12]{caulfield12moneta-d}
+Adrian~M. Caulfield, Todor~I. Mollov, Louis~Alex Eisner, Arup De, Joel Coburn,
+  and Steven Swanson.
+\newblock Providing safe, user space access to fast, solid state disks.
+\newblock pages 387--400, 2012.
+
 \bibitem[Com79]{comer79btree}
 Douglas Comer.
 \newblock Ubiquitous {B-Tree}.
@@ -31,6 +44,11 @@ Abel Gordon, Nadav Amit, Nadav Har'El, Muli Ben-Yehuda, Alex Landau, Assaf
   Schuster, and Dan Tsafrir.
 \newblock {ELI}: Bare-metal performance for {I/O} virtualization.
 \newblock 2012.
+
+\bibitem[HBQS15]{huang2015unified}
+Jian Huang, Anirudh Badam, Moinuddin Qureshi, and Karsten Schwan.
+\newblock Unified address translation for memory-mapped {SSDs} with {FlashMap}.
+\newblock pages 580--591, 2015.
 
 \bibitem[Int15a]{intel}
 Intel.
@@ -51,6 +69,11 @@ Jeffrey Katcher.
 Alexey Kopytov.
 \newblock {SysBench}: a system performance benchmark.
 \newblock http://sysbench.sourceforge.net, 2004.
+
+\bibitem[Lev84]{levy1984capability}
+Henry~M. Levy.
+\newblock {\em Capability-Based Computer Systems}.
+\newblock Digital Press, 1984.
 
 \bibitem[LHW12]{le12nested}
 Duy Le, Hai Huang, and Haining Wang.
@@ -121,6 +144,12 @@ Seagate.
 \newblock
   www.seagate.com/em/en/about-seagate/news/seagate-demonstrates-fastest-ever-ssd-flash-drive-pr/,
   Mar 2016.
+
+\bibitem[SGB{\etalchar{+}}14]{seshadri2014willow}
+Sudharsan Seshadri, Mark Gahagan, Sundaram Bhaskaran, Trevor Bunker, Arup De,
+  Yanqin Jin, Yang Liu, and Steven Swanson.
+\newblock Willow: A user-programmable {SSD}.
+\newblock pages 67--80, 2014.
 
 \bibitem[SVL01]{sugerman2001virtualizing}
 Jeremy Sugerman, Ganesh Venkitachalam, and Beng-Hong Lim.

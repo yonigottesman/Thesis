@@ -15,7 +15,7 @@ The I/O stack is the set of abstractions an I/O request passes starting at an ap
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \paragraph{Filesystem}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-A filesystem is the methods and data structures that an operating system uses to keep track of files on a disk or partition; that is, the way files are organized on the disk.
+A filesystem is the methods and data structures that an operating system uses to keep track of files on a disk or partition; that is, the way the files are organized on the disk.
 Every filesystem implements a mapping mechanism in which file offsets are mapped to physical storage blocks.
 Traditionally, UNIX-derived filesystems used per-file direct and indirect  block mapping tables to map offsets in a file to their corresponding data block. But tracking individual blocks incurs large spatial and latency
 overheads when dealing with large files. Modern UNIX filesystems (e.g., ext4~\cite{mathur07ext4},

@@ -30,7 +30,7 @@ The introduction of next-generation, commercial PCIe SSDs that deliver multi-GB/
 
 In this paper we present NeSC, a self-virtualizing nested storage controller that enables hypervisors to expose files and persistent objects\footnotemark (or sets thereof) as virtual block devices that can be directly assigned to VMs. NeSC enforces the permissions set by the hypervisor and the hosted filesystem and prevents virtual devices (and VMs) from accessing stored data for which they have no access permissions.
 
-\footnotetext{We use the terms files and objects interchangeably in this paper.}
+\footnotetext{We use the terms files and objects interchangeably.}
 
 NeSC enforces isolation by associating each virtual NeSC device with a table that maps offsets in the virtual device to blocks on the physical device. This process follows the way filesystems map file offsets to disk blocks.
 %

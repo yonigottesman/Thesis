@@ -12,8 +12,6 @@ SRCS=$(wildcard *.tex)
 
 pdf: $(SRCS)
 	$(PDFLATEX) $(PDFARGS) $(TARGET).tex
-	$(PDFLATEX) $(PDFARGS) $(TARGET).tex
-	$(PDFLATEX) $(PDFARGS) $(TARGET).tex
 
 
 
