@@ -106,10 +106,10 @@ Gerald~J Popek and Robert~P Goldberg.
 \newblock Formal requirements for virtualizable third generation architectures.
 \newblock {\em Communications of the ACM}, 17(7):412--421, 1974.
 
-\bibitem[PS]{pcisigiov}
+\bibitem[PS09]{pcisigiov}
 PCI-SIG.
 \newblock {PCI I/O} virtualization.
-\newblock http://pcisig.com/specifications/iov/.
+\newblock http://pcisig.com/specifications/iov/, 2009.
 
 \bibitem[RBM13]{rodeh13btrfs}
 Ohad Rodeh, Josef Bacik, and Chris Mason.
