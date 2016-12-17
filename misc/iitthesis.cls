@@ -292,13 +292,13 @@
 \iitthesis@thesisdatafield{authorEnglish}{Yonatan Gottesman}
 \iitthesis@thesisdatafield{authorHebrew}{יונתן גוטסמן}
 \iitthesis@thesisdatafield{titleEnglish}{NeSC: A self-virtualizing, nested storage controller}
-\iitthesis@thesisdatafield{titleHebrew}{התקן אחסון תומך וירטואליזציה}
+\iitthesis@thesisdatafield{titleHebrew}{התקן אחסון מקונן תומך וירטואליזציה}
 \iitthesis@thesisdatafield{disciplineEnglish}{Electrical Engineering}
-\iitthesis@thesisdatafield{disciplineHebrew}{לללהנדסת חשמל}
+\iitthesis@thesisdatafield{disciplineHebrew}{מגיסטר למדעים בהנדסת חשמל}
 \iitthesis@thesisdatafield{supervisionEnglish}{Information regarding the supervision and supervisors}
 \iitthesis@thesisdatafield{supervisionHebrew}{מידע על המנחים וההנחיה}
 \iitthesis@thesisdatafield{publicationInfoHebrew}{ציון אם העבודה פורסמה בכתבי עת או  הוצגה בכנסים. הרשימה תכתב בהתאם לכללי הציטוט (כולל הכותר ושמות השותפים). במקרה של שיתוף פעולה, פירוט תרומת המגיש.}
-\iitthesis@thesisdatafield{publicationInfoEnglish}{YONIYONIInfo about whether the contents of the thesis was published, about collaborators and the thesis author's contribution.}
+\iitthesis@thesisdatafield{publicationInfoEnglish}{Info about whether the contents of the thesis was published, about collaborators and the thesis author's contribution.}
 \iitthesis@thesisdatafield{GregorianDateEnglish}{Gregorian Month and Year}
 \iitthesis@thesisdatafield{GregorianDateHebrew}{חודש ושנה גרגוריאניים}
 \iitthesis@thesisdatafield{JewishDateEnglish}{Hebrew Month and Year}
