@@ -50,6 +50,12 @@ Jian Huang, Anirudh Badam, Moinuddin Qureshi, and Karsten Schwan.
 \newblock Unified address translation for memory-mapped {SSDs} with {FlashMap}.
 \newblock pages 580--591, 2015.
 
+\bibitem[Hoe63]{Hoeffding}
+Wassily Hoeffding.
+\newblock Probability inequalities for sums of bounded random variables.
+\newblock {\em Journal of the American Statistical Association}, 58:13--30,
+  1963.
+
 \bibitem[Int15a]{intel}
 Intel.
 \newblock {\em Intel 64 and {IA-32} Architectures Software Developer Manual},
