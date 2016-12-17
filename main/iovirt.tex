@@ -88,7 +88,7 @@ Figure~\ref{fig:storage} illustrates the three most common methods by which hype
   
 \item
   \emph{Paravirtualization}~\cite{barham2003xen,russell2008virtio} (Figure~\ref{fig:storage:virtio})\quad
-  This method, commonly referred to as virtio after its Linux implementation, eliminates the need for the hypervisor to emulate a complete physical device and enables the guest VM to directly request a virtual LBA from the
+  This method eliminates the need for the hypervisor to emulate a complete physical device and enables the guest VM to directly request a virtual LBA from the
   hypervisor, thereby improving performance. The hypervisor still emulates a device, but the guest knows the device is emulated and not real and can optimize the interface between it and the hypervisor. 
   This is the most common storage virtualization method used in modern hypervisors.
 

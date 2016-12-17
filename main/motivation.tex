@@ -22,18 +22,18 @@ When an application accesses a file, the OS uses the filesystem layer to check t
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[t]
   \centering
-  \includegraphics[width=\columnwidth]{figs/motivation.pdf}
-  \caption{The performance benefit of direct device assignment over virtio for high-speed storage devices. Fast devices were emulated using an in-memory disk (ramdisk) whose bandwidth, due to the overheads of the software layers, peaks at 3.6GB/s.
+  \includegraphics[width=\columnwidth]{figs/motivation.png}
+  \caption{The performance benefit of direct device assignment over virtio for high-speed storage devices. Fast devices were emulated using an in-memory disk (ramdisk) whose bandwidth peaks at 3.6GB/s.
     \label{fig:directperf}}
   \end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % quantify the overheads
-Figure~\ref{fig:directperf} quantifies the potential bandwidth speedup of direct device assignment over the common virtio interface for high-speed storage devices. We have emulated such devices by throttling the bandwidth of an in-memory storage device (ramdisk). Notably, due to OS overhead incurred by its software layers, the ramdisk bandwidth peaks at 3.6GB/s. \comment{What about multithreading?}
+Figure~\ref{fig:directperf} quantifies the potential bandwidth speedup of direct device assignment over the common virtio interface for high-speed storage devices. We have emulated such devices by throttling the bandwidth of an in-memory storage device (ramdisk). Notably, due to OS overhead incurred by its software layers, the ramdisk bandwidth peaks at 3.6GB/s. 
 
 The figure shows the raw write speedups obtained using direct device assignment over virtio for different device speeds, as observed by a guest VM application.
 Notably, we see that compared to the state-of-the-art virtio method, direct device assignment roughly doubles the storage bandwidth provided to virtual machines for modern, multi GB/s storage devices.
-ppThe reason for these speedups is that as device bandwidth increases, the software overheads associated with virtualizing a storage device become a performance bottleneck.
+The reason for these speedups is that as device bandwidth increases, the software overheads associated with virtualizing a storage device become a performance bottleneck.
 Using the direct device assignment method eliminates both the virtualization overheads as well as the overheads incurred by the replication of the software layers in the hypervisor and the guest OS.
 
 % we need NeSC
