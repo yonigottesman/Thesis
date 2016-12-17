@@ -84,21 +84,22 @@
 Table~\ref{tab:system} describes our experimental system, which consists of a Supermicro X9DRG-QF server equipped with a Xilinx VC707 evaluation board.
 
 \section*{Emulating IOV}
-We have implemented NeSC on the VC707's Virtex-7 FPGA. Since this revision of the Virtex7 FPGA only supports PCIe Gen2, we had to emulate the self-virtualizing features rather than use the SR-IOV protocol extension. We have emulated the SR-IOV functionalities by dividing the device's memory-mapped BAR to 4KB pages. The first page exports the NeSC PF, and subsequent pages export complete VF interfaces. Upon QEMU startup, the hypervisor maps one of the VF interfaces (offset in the BAR) into the physical address space of the VM. A  multiplexer in the device examines the address to which each PCIe packet (TLP) was sent and queues it to the appropriate VF's command queue. For example, a read TLP that was sent to address 4244 in the NeSC device would have been routed by the multiplexer to offset 128 in the first VF.
+We implemented NeSC using a VC707's Virtex-7 FPGA. Since this revision of the Virtex7 FPGA only supports PCIe Gen2, we had to emulate the self-virtualizing features rather than use the SR-IOV protocol extension. We have emulated the SR-IOV functionalities by dividing the device's memory-mapped BAR to 4KB pages. The first page exports the NeSC PF, and subsequent pages export complete VF interfaces. Upon QEMU startup, the hypervisor maps one of the VF interfaces (offset in the BAR) into the physical address space of the VM. A  multiplexer in the device examines the address to which each PCIe packet (TLP) was sent and queues it to the appropriate VF's command queue. For example, a read TLP that was sent to address 4,244 in the NeSC device would have been routed by the multiplexer to offset 128 in the first VF.
 
 Furthermore, since the emulated VFs are not recognized by the IOMMU, VMs cannot DMA data directly to the VC707 board. Instead, the hypervisor allocates trampoline buffers for each VM, and VMs have to copy data to/from the trampoline buffers before/after initiating a DMA operation.
 
 We note that both SR-IOV emulation and trampoline buffers actually impede the performance of NeSC and thereby provide a pessimistic device model. Using a true PCIe gen3 device would improve NeSC's performance.
 
-We further note that we do not emulate a specific technology access latency for the emulated storage device. Instead, we simply use direct DRAM reads and writes latencies.
+We further note that we do not emulate a specific access latency technology for the emulated storage device. Instead, we simply use direct DRAM read and write latencies.
 
 We used the QEMU/KVM virtual machine monitor. Since the VC707 board only has 1GB of RAM, we could only emulate 1GB storage on the NeSC device. In order to prevent the entire simulated storage device from being cached in RAM, we limited the VM's RAM to 128MB. We validated that this limitation does not induce swapping in any of the benchmarks.
 
-Finally, in order for NeSC to truly function as a self-virtualizing device, we implemented the VF guest driver, which is a simple block device driver, and the hypervisor PF driver, which acts as a block device driver as well as the NeSC management driver for creating and deleting VFs.  
+Finally, in order for NeSC to truly function as a self-virtualizing device, we implemented the VF guest driver, which is a simple block device driver,
+and the hypervisor PF driver, which acts as both a block device driver and as the NeSC management driver for creating and deleting VFs.  
 
 \section*{Benchmarks}
 Table~\ref{tab:bench} lists the benchmarks used to evaluate NeSC.
-We first evaluated read/write performace metrics (e.g., bandwidth, latency) using the \emph{dd} Unix utility.
+We first evaluated read/write performance metrics (e.g., bandwidth, latency) using the \emph{dd} Unix utility.
 In addition, we used a common set of macrobenchmarks that stress the storage system.
 All applications used the virtual device through an underlying ext4 filesystem.
 

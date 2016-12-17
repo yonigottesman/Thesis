@@ -4,17 +4,17 @@
 \begin{figure*}[!ht]
   \centering
     \subfloat[Emulation ]{
-      \includegraphics[width=0.3\textwidth]{figs/emulation.pdf}
+      \includegraphics[width=0.3\textwidth]{figs/emulation.png}
       \label{fig:storage:emulation}
     }
     \hfill
     \subfloat[virtio]{
-      \includegraphics[width=0.3\textwidth]{figs/virtio.pdf}
+      \includegraphics[width=0.3\textwidth]{figs/virtio.png}
       \label{fig:storage:virtio}
     }
     \hfill
     \subfloat[Direct-IO]{
-      \includegraphics[width=0.3\textwidth]{figs/direct.pdf}
+      \includegraphics[width=0.3\textwidth]{figs/direct.png}
       \label{fig:storage:direct}
     }
     \caption{IO Virtualization techniques.
@@ -28,7 +28,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Virtualization Background}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\comment{cite the Xen paper some ware}
 Virtualization is the act of logically dividing the system resources between different entities
 running on it. Virtualization hides the physical characteristics of a computing platform from the users,
 presenting instead another abstract computing platform. The software that controls the virtualization of the
@@ -48,36 +47,35 @@ and as well as in reduced performance on the virtual machine compared to running
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection*{Virtualization Aspects}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-There are 3 main resources that the hypervisor needs to virtualize: the CPU, Memory and I/O devices.
+There are three main resources that the hypervisor needs to virtualize: the CPU, Memory and I/O devices.
 
 \paragraph {CPU}
-A common implementation of CPU virtualizing is \emph{Trap-and-Emulate}. When using this technique,
+A common implementation of CPU virtualization is \emph{Trap-and-Emulate}. When using this technique,
 the guest code (OS or user application) may run directly on the CPU and only when an unprivileged command is
-executed, the CPU will issue a trap to the hypervisor which will handle the guest command. For the hypervisor to
-configure on which instructions the guest should trap on, CPU manufactures introduced virtualization support at the hardware layer (Intel's VT-x and AMD AMD-V). With these processor extensions, a hypervisor can configure on which instructions the VM should trap to the hypervisor code.
+executed, the CPU will issue a trap to the hypervisor that  will emulate the guest command. To configure the instructions that cause a VM to trap, modern CPUs expose a special interface (Intel's VT-x and AMD AMD-V) for the hypervisor to program.
+
 
 \paragraph {Memory}
-A guest OS has no control over the hosts physical memory, just like any other process running on the system cannot control physical memory and only \comment{sees} its virtual address space.
+Just like any other process running on the system, a guest OS has no control over the hosts physical memory.
+The hypervisor will have to provide each of the guest OSs with the illusion of a more or less contiguous block of physical memory starting at address 0, because that's what all OSs expect.
 %
-When the guest OS references a physical address, what its actually referencing is a virtual address, so the
-page tables set by the guest OS translate \emph{guest virtual address} to \emph{guest physical address}.
+The simplest way to do that is to introduce one more level of virtualization, one more  level of mapping between what the guest OS considers a physical address (it's called \emph{guest physical address}) and the actual physical address (which is called \emph{host physical address}).
 The hypervisor isolates the running VM with page tables that translate \emph{guest physical address} to \emph{host physical address}. When a guest application is running, each memory access (to \emph{guest virtual address}) must pass two translation layers, the first translates to \emph{guest physical address}, and the second translates to \emph{host physical address}.
 
 Modern processors use \emph{Extended Page Tables} (EPT) technology. This technology enables the \emph{MMU} to do this double translation: First it translates the \emph{guest virtaul address} to \emph{guest physical address} using the page tables set by the guest OS. Then it translates the \emph{guest physical address} to \emph{host physical address} using the page tables set by the hypervisor.
 
-Another technique used on systems without EPT support is called \emph{shadow page tables}.
-involves denying the guest OS any access to its own page table entries by trapping access attempts and emulating them instead in software.
+Another technique used on systems without EPT support is called \emph{shadow page tables}. The idea is to create a second copy of VM's page tables called shadow page tables that map \emph{guest virtual addresses} directly to host physical addresses (actual DRAM), and let the processor use them for address translation (so the CR3 register points to those, rather than to guest, or primary page tables).
 
 \paragraph {I/O devices}
-Its the hypervisor responsibility to share an I/O device between virtual machines. While sharing a device, isolation must be enforced so that one VM cannot access other VMs' resources on the same I/O device.
+Its the hypervisor's responsibility to share an I/O device between virtual machines. When sharing a device, isolation must be enforced so that one VM cannot access other VMs' resources on the same I/O device.
 Figure~\ref{fig:storage} illustrates the three most common methods by which hypervisors virtualize storage devices (We discuss storage devices, but the same technologies work for any I/O device ):
 
 \begin{enumerate}
 \item
   \emph{Full device emulation}~\cite{sugerman2001virtualizing} (Figure~\ref{fig:storage:emulation})\quad
   In this method, the host emulates a well known hardware device.
-  The hypervisor attaches the emulated device to the VM's physical address space (\emph{guest physical address}), and the gust OS will discover the device while scanning the buses for physical devices. When the device is discovered
-  the OS will load the appropriate driver. Whenever the guest will access the address space representing the device (a PCIe BAR for example), a trap will be issued by the processor, and the hypervisor will emulate the
+  The hypervisor attaches the emulated device to the VM's physical address space (\emph{guest physical address}), and the gust OS will discover the device while scanning the system for physical devices. When the device is discovered
+  the OS will load the appropriate driver. Whenever the guest will access the address space representing the device (a PCIe function for example), a trap will be issued by the processor, and the hypervisor will emulate the
   behavior of the device for that access.
 
   When the device is a block device, the emulated device is represented as a file on the host filesystem. Whenever the guest tries to access a \emph{logical block address} (LBA) on the device, the host converts the LBA to an offset
@@ -90,15 +88,15 @@ Figure~\ref{fig:storage} illustrates the three most common methods by which hype
   
 \item
   \emph{Paravirtualization}~\cite{barham2003xen,russell2008virtio} (Figure~\ref{fig:storage:virtio})\quad
-  This method, commonly referred to as virtio after its Linux implementation, eliminates the need for the hypervisor to emulate a complete physical device and enables the guest VM to directly request a virtual LBA from the
+  This method eliminates the need for the hypervisor to emulate a complete physical device and enables the guest VM to directly request a virtual LBA from the
   hypervisor, thereby improving performance. The hypervisor still emulates a device, but the guest knows the device is emulated and not real and can optimize the interface between it and the hypervisor. 
   This is the most common storage virtualization method used in modern hypervisors.
 
 \item
   \emph{Direct device assignment}~\cite{raj2007high} (Figure~\ref{fig:storage:direct})\quad
   This method allows the guest VM to directly interact with the physical device without hypervisor mediation. 
-  Consequently, it delivers the best storage performance to the VM. However, since legacy storage devices do not enforce isolation among clients, it does not allow multiple VMs to share a physical device. The new PCIe protocol SR-IOV
-  allows multiple clients to access the same physical device while enforcing isolation at the hardware level. We discuss SR-IOV in section \comment{How to reference a sectino??} 
+  Consequently, it delivers the best storage performance to the VM. However, since legacy storage devices do not enforce isolation among clients, it does not allow multiple VMs to share a physical device. The new PCIe protocol's SR-IOV feature
+  allows multiple clients to access the same physical device while enforcing isolation at the hardware level. We discuss SR-IOV in section~\ref{sec:sriov}
   
 
 \end{enumerate}
@@ -107,7 +105,7 @@ Figure~\ref{fig:storage} illustrates the three most common methods by which hype
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{The I/O Stack}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-The I/O stack is the set of abstractions an I/O request passes starting at an application
+The I/O stack is the set of abstractions an I/O request passes starting at the application
 issuing the read/write request, and ending at the data written/read to the physical storage
 device.
 
@@ -143,9 +141,7 @@ A request can reach this layer either from the filesystem layer, or directly fro
 \label{iovirt:driver}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 The role of device drivers is to communicate with I/O devices attached to the system.
-Block device drivers get block read/write requests from the block layer in the form of a bio
-struct.
-The bio structure contains everything that a block driver needs to carry out the request to
+Block device drivers get block read/write requests from the block layer in the form of a \emph{bio struct}. The bio object contains everything that a block driver needs to carry out the request to
 the block device, including the LBA of the request, the size
 and the virtual address from where the data is copied from/to.
 
@@ -158,6 +154,7 @@ writing data a word at a time, where a "word" is a much smaller block, usually 1
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Single Root I/O Virtualization}
+\label{sec:sriov}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 The single root I/O virtualization (SR-IOV) interface is an extension to the PCI Express (PCIe) specification.
 SR-IOV allows a device to separate access to its resources among various PCIe hardware functions. These functions consist of the following types:
