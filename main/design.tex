@@ -111,7 +111,7 @@ a block that isnt allocated, the hypervisor will allocate the block and update t
 The hypervisor then creates a new NeSC VF through the PF. It initializes the VF configuration registers (e.g., the size of the virtual device), writes the extent tree to  memory and sets the VF's base extent tree configuration register to point to the in-memory extent tree.
 
 Following the two previous steps, the VF is ready and the virtual device is configured. The hypervisor then connects the VM to the new virtual machine, either by executing a new machine or by notifying an existing machine that a new device is available for its use (virtual device hotplug).
-The new VF BAR is mapped to a physical address and the hypervisor connects the virtual machine to the VF by mapping its \emph{guest physical address} to the address of the BAR.
+The new VF is mapped to a physical address and the hypervisor connects the virtual machine to the VF by mapping its \emph{guest physical address} to the physical address of the VF.
 The guest OS will probe the PCIe bus and discover the VF.
 
 

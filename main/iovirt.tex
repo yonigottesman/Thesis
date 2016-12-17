@@ -75,7 +75,7 @@ Figure~\ref{fig:storage} illustrates the three most common methods by which hype
   \emph{Full device emulation}~\cite{sugerman2001virtualizing} (Figure~\ref{fig:storage:emulation})\quad
   In this method, the host emulates a well known hardware device.
   The hypervisor attaches the emulated device to the VM's physical address space (\emph{guest physical address}), and the gust OS will discover the device while scanning the system for physical devices. When the device is discovered
-  the OS will load the appropriate driver. Whenever the guest will access the address space representing the device (a PCIe BAR for example), a trap will be issued by the processor, and the hypervisor will emulate the
+  the OS will load the appropriate driver. Whenever the guest will access the address space representing the device (a PCIe function for example), a trap will be issued by the processor, and the hypervisor will emulate the
   behavior of the device for that access.
 
   When the device is a block device, the emulated device is represented as a file on the host filesystem. Whenever the guest tries to access a \emph{logical block address} (LBA) on the device, the host converts the LBA to an offset
