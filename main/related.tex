@@ -14,6 +14,10 @@ Willow~\cite{seshadri2014willow} examines offloading computation to small storag
 NVMe~\cite{nvme} is a new protocol for accessing high-speed storage devices. Typically implemented over PCIe, NVMe defines an abstract concept of \emph{address spaces} through which applications and VMs can access subsets of the target storage device. The protocol, however, does not specify how address spaces are defined, how they are maintained, and what they represent. 
 NeSC therefore complements the abstract NVMe address spaces and enables the protocol to support protected, self-virtualizing storage devices.
 
+DFS~\cite{josephson2010dfs} focuses on reducing the overheads imposed by traditional 
+file systems and block device drivers, when using high performance storage devices.
+The DirectFS relies on the flash storage layer for functionality traditionally implemented in the OS, such as block allocation and is implemented as a kernel-level file system. DFS focuses on optimizing the kernel IO path to better support high speed storage, while NeSC investigates how to access the storage without going through the kernel at all. 
+
 Finally, FlashMap~\cite{huang2015unified} provides a unified translation layer for main memory and SSDs, which enables applications to map files to their memory address space. Specifically, FlashMap unifies three orthogonal translation layers used in such scenarios: the page tables, the OS file mapping, and the flash translation layer.
 FlashMap, however, only supports memory-mapped SSD content, and it does not address how the unified translation would support virtualized environments.
 
